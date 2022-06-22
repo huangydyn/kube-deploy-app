@@ -1,3 +1,4 @@
+参考: https://cloud.tencent.com/developer/article/1552277
 # 部署es
 ```
 kubectl create -f efk/es-deployement.yaml
