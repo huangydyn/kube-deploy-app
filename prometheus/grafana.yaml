@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
@@ -11,6 +11,9 @@ spec:
         task: monitoring
         k8s-app: grafana
     spec:
+      selector:
+        matchLabels:
+          k8s-app: grafana
       containers:
       - name: grafana
         image: grafana/grafana:7.4.3

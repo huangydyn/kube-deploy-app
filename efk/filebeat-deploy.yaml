@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: filebeat
@@ -8,6 +8,9 @@ metadata:
     k8s-app: filebeat
 spec:
   template:
+    selector:
+      matchLabels:
+        k8s-app: filebeat
     metadata:
       labels:
         k8s-app: filebeat

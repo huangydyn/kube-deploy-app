@@ -1,9 +1,24 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: jenkins
   namespace: kube-ops
+  labels:
+    app: jenkins
 spec:
+  serviceName: jenkins
+  selector:
+    matchLabels:
+      app: jenkins
+  volumeClaimTemplates:
+    - metadata:
+        name: jenkins-data
+      spec:
+        storageClassName: cbs
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 20Gi
   template:
     metadata:
       labels:
@@ -43,6 +58,9 @@ spec:
           initialDelaySeconds: 60
           timeoutSeconds: 5
           failureThreshold: 12 # ~2 minutes
+        volumeMounts:
+        - name: jenkins-data
+          mountPath: /var/jenkins_home
         env:
         - name: LIMITS_MEMORY
           valueFrom:

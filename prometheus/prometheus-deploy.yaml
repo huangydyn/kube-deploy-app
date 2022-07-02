@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -6,6 +6,9 @@ metadata:
   name: prometheus
   namespace: kube-ops
 spec:
+  selector:
+    matchLabels:
+      k8s-app: prometheus
   replicas: 1
   template:
     metadata:
